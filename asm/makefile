@@ -1,19 +1,17 @@
-ASM = nasm
+ASM = as
 LD = ld
-ASMFLAGS = -f elf64
-LDFLAGS = -no-pie
 
-SRC = Colleen.asm Grace.asm Sully.asm
-OBJ = $(SRC:.asm=.o)
-EXEC = $(SRC:.asm=)
+SRC = Colleen.s Grace.s Sully.s
+OBJ = $(SRC:.s=.o)
+EXEC = $(SRC:.s=)
 
 all: $(EXEC)
 
 %: %.o
-	@$(LD) $(LDFLAGS) -o $@ $<
+	@$(LD)  -o $@ $<
 
 %.o: %.asm
-	@$(ASM) $(ASMFLAGS) $< -o $@
+	@$(ASM)  $< -o $@
 
 clean:
 	@rm -f $(OBJ)
@@ -23,3 +21,5 @@ fclean: clean
 	@rm -f tmp_Colleen
 
 re: fclean all
+
+.PHONY: all clean fclean re
